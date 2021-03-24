@@ -1,0 +1,93 @@
+.swap-form {
+  width    : 100%;
+  height   : 100%;
+  max-width: 420px;
+  height   : 600px;
+  margin   : 0 auto;
+
+  .head {
+    margin-bottom: 10px;
+  }
+}
+
+.swap__from {
+  display        : flex;
+  align-items    : center;
+  justify-content: center;
+
+  .token-list__entry--from {
+    width                    : 112px;
+    border                   : 1px solid #d9d9d9;
+    border-right-color       : transparent;
+    height                   : 60px;
+    padding                  : 16px 12px;
+    display                  : flex;
+    align-items              : center;
+    border-top-left-radius   : 5px;
+    border-bottom-left-radius: 5px;
+
+    img {
+      width : 24px;
+      height: 24px;
+    }
+
+    .asset__name {
+      margin-left : 5px;
+      margin-right: 5px;
+    }
+  }
+
+  .swap__amount {
+    width                     : calc(100% - 112px);
+    display                   : flex;
+    align-items               : center;
+    height                    : 60px;
+    padding                   : 16px 12px;
+    border                    : 1px solid #d9d9d9;
+    border-top-right-radius   : 5px;
+    border-bottom-right-radius: 5px;
+
+    input {
+      width    : 100px;
+      height   : auto;
+      font-size: 125%;
+    }
+  }
+}
+
+.swap-symbol {
+  padding: 10px;
+}
+
+.token-list__entry--to {
+  display        : flex;
+  align-items    : center;
+  justify-content: space-between;
+  height         : 60px;
+  border-radius  : 5px;
+  border         : 1px solid #d9d9d9;
+  padding        : 16px 12px;
+}
+
+.swap__options {
+  color        : #037dd6;
+  font-size    : 20px;
+  margin-top   : 20px;
+  margin-bottom: 20px;
+}
+
+.swap__buttons {
+  button {
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    width           : 100%;
+    padding         : 16px 12px;
+    color           : #ffffff;
+    background-color: #1990ff;
+    font-size       : 18px;
+    border-radius   : 20px;
+    height          : 60px;
+  }
+
+}
