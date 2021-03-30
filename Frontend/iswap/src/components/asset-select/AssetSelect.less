@@ -1,0 +1,36 @@
+@import "../../theme.less";
+
+.asset-item {
+  display      : flex;
+  align-items  : center;
+  margin-bottom: 20px;
+  padding      : 10px 5px;
+
+  &:hover {
+    background: rgba(243, 243, 243, 1);
+  }
+
+  .asset-logo {
+    width : 20px;
+    height: 20px;
+  }
+
+  .asset-info {
+    margin-left: 20px;
+
+    .asset-info__symbol {
+      font-weight: 600;
+      font-size  : 18px;
+    }
+
+    .asset-info__name {
+      color     : @text-color-secondary;
+      margin-top: 2px;
+    }
+  }
+
+}
+
+.asset-item.inactive {
+  opacity: 0.6;
+}

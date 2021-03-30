@@ -1,8 +1,9 @@
 <template>
   <div class="swap-form text-center">
+    <AssetSelectModal></AssetSelectModal>
     <div class="text-left head">Swap from</div>
     <div class="swap__from">
-      <div class="token-list__entry--from"><img :src="require(`@/assets/icons/nuls.png`)" /><span
+      <div class="token-list__entry--from" @click="assetSelectToggle"><img :src="require(`@/assets/icons/nuls.png`)" /><span
           class="asset__name">NULS</span>
         <svg t="1616578825035" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
           p-id="5942" width="20" height="20">
@@ -27,7 +28,7 @@
       <div class="text-left head">
         Swap to
       </div>
-      <div class="token-list__entry--to">
+      <div class="token-list__entry--to" @click="assetSelectToggle">
         <span class="asset__name">SKL</span>
         <svg t="1616578825035" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
           p-id="5942" width="20" height="20">
@@ -38,7 +39,11 @@
       </div>
     </div>
     <div class="swap__options">
-      options
+      <div class="swap__options--title">options</div>
+      <div>
+        <div class="text-left">滑点</div>
+        <SlidePointSelect></SlidePointSelect>
+      </div>
     </div>
     <div class="swap__buttons">
       <button>Swap</button>

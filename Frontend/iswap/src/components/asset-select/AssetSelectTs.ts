@@ -1,4 +1,4 @@
-import {defineComponent} from "vue"
-export const AssetSelect=defineComponent({
-  
+import { defineComponent } from "vue"
+export const AssetSelectTs = defineComponent({
+
 })
