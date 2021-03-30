@@ -1,0 +1,44 @@
+.swap__from {
+  display        : flex;
+  align-items    : center;
+  justify-content: center;
+
+  .token-list__entry--from {
+    width                    : 112px;
+    border                   : 1px solid #d9d9d9;
+    border-right-color       : transparent;
+    height                   : 60px;
+    padding                  : 16px 12px;
+    display                  : flex;
+    align-items              : center;
+    border-top-left-radius   : 5px;
+    border-bottom-left-radius: 5px;
+
+    img {
+      width : 24px;
+      height: 24px;
+    }
+
+    .asset__name {
+      margin-left : 5px;
+      margin-right: 5px;
+    }
+  }
+
+  .swap__amount {
+    width                     : calc(100% - 112px);
+    display                   : flex;
+    align-items               : center;
+    height                    : 60px;
+    padding                   : 16px 12px;
+    border                    : 1px solid #d9d9d9;
+    border-top-right-radius   : 5px;
+    border-bottom-right-radius: 5px;
+
+    input {
+      width    : 100px;
+      height   : auto;
+      font-size: 125%;
+    }
+  }
+}

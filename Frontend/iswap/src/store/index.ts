@@ -1,28 +1,29 @@
 import { createStore } from "vuex";
-
+import tokens from "@/assets/configs/tokens.json"
+import { Token } from "@/interfaces/Token";
+import { HttpService } from "@/service/HttpService";
 export default createStore({
   state: {
-    modals: []
+    tokenList: [],
+    swapParams:null
   },
   getters: {
-    activeModals: (state) => {
-      return state.modals
+    tokenList: (state) => {
+      return state.tokenList
     }
   },
   mutations: {
-    closeModal: (state, modalName: string) => {
-      if (modalName) {
-        const newModals = state.modals.filter((name) => name !== modalName)
-        state.modals = newModals
-      }
-      state.modals.pop()
-    },
-    openModal: (state, modalName: string) => {
-      if (modalName) {
-        state.modals.push(modalName)
-      }
+    setTokenList: (state, tokens: Array<Token>) => {
+      state.tokenList = tokens
     }
   },
-  actions: {},
+  actions: {
+    getTokenList: ({ commit }) => {
+      commit("setTokenList", tokens)
+    },
+    swap:({commit})=>{
+      const http=new HttpService()
+    }
+  },
   modules: {},
 });
