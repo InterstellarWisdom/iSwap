@@ -3,7 +3,10 @@
     <a-modal :visible="visible" title="select a token" @ok="handleOk" @cancel="handleCancel" :footer="null">
       <AssetList @on-token-select="handleTokenSelect"></AssetList>
     </a-modal>
-    <span class="asset__name">SKL</span>
+    <span class="asset__name">
+      <span v-if="toToken">{{toToken.symbol}}</span>
+      <span v-else>请选择一个代币</span>
+    </span>
     <svg t="1616578825035" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
       p-id="5942" width="20" height="20">
       <path

@@ -15,11 +15,29 @@ export const AssetToSelectTs = defineComponent({
       handleCancel
     };
   },
+  data() {
+    return {
+      selectedToToken: null
+    }
+  },
+  computed: {
+    toToken: {
+      get(): Token {
+        return this.selectedToToken
+      },
+      set(token: Token) {
+
+        this.selectedToToken = token
+      }
+    }
+  },
   methods: {
     assetSelectToggle() {
       this.showModal()
     },
     handleTokenSelect(token: Token) {
+      this.toToken = token
+      this.$store.commit("setToToken", this.toToken)
       this.handleOk()
     }
   }

@@ -4,7 +4,7 @@
       <AssetList @on-token-select="handleTokenSelect"></AssetList>
     </a-modal>
     <div class="token-list__entry--from" @click="assetSelectToggle"><img
-        :src="require(`@/assets/icons/nuls.png`)" /><span class="asset__name">NULS</span>
+        :src="require(`@/assets/icons/nuls.png`)" /><span class="asset__name">{{fromToken.symbol}}</span>
       <svg t="1616578825035" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
         p-id="5942" width="20" height="20">
         <path
@@ -12,7 +12,9 @@
           fill="#000000" opacity="0.2" p-id="5943"></path>
       </svg>
     </div>
-    <div class="swap__amount"><input type="text" value="100" /><span>≈ 10000000.00 RMB</span></div>
+    <div class="swap__amount"><input type="text" placeholder="0.00" :value="amountIn" @input="handleInput" /><span>≈
+        10000000.00 RMB</span>
+    </div>
   </div>
 </template>
 <script lang="ts">

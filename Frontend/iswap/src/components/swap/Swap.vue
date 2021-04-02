@@ -18,16 +18,23 @@
       </div>
       <AssetToSelect></AssetToSelect>
     </div>
-    <div class="swap__options">
+<!--     <div class="swap__options">
       <div class="swap__options--title">options</div>
       <div>
         <div class="text-left">滑点</div>
         <SlidePointSelect></SlidePointSelect>
       </div>
+    </div> -->
+    <a-spin :spinning="isGettingQuote">
+      <div class="swap__buttons">
+        <button @click="handleSwap">Review Swap</button>
+      </div>
+    </a-spin>
+
+    <div v-if="isShowSwapConfirm">
+      <SwapConfirm :visible="isShowSwapConfirm" @onSwapConfirm="handleSwapConfirm"></SwapConfirm>
     </div>
-    <div class="swap__buttons">
-      <button>Swap</button>
-    </div>
+
   </div>
 </template>
 <script lang="ts">

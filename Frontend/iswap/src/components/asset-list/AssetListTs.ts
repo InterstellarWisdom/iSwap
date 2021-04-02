@@ -1,12 +1,11 @@
 import { Token } from "@/interfaces/Token"
 import { computed, defineComponent } from "vue"
-import {  useStore } from "vuex"
+import { useStore } from "vuex"
 export const AssetListTs = defineComponent({
   setup() {
     const store = useStore()
-    store.dispatch("getTokenList")
     return {
-      tokenList: computed(() => store.getters.tokenList)
+      tokenList: computed(() => store.getters.availableTokenList)
     }
   },
   methods: {
