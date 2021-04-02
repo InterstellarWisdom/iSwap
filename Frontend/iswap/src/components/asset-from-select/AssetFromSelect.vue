@@ -1,7 +1,7 @@
 <template>
   <div class="swap__from">
     <a-modal :visible="visible" title="select a token" @ok="handleOk" @cancel="handleCancel" :footer="null">
-      <AssetList @on-token-select="handleTokenSelect"></AssetList>
+      <AssetList @on-token-select="handleTokenSelect" :filter="swapParams.to"></AssetList>
     </a-modal>
     <div class="token-list__entry--from" @click="assetSelectToggle"><img
         :src="require(`@/assets/icons/nuls.png`)" /><span class="asset__name">{{fromToken.symbol}}</span>

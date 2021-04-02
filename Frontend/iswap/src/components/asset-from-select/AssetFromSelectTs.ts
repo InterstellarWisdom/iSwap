@@ -24,7 +24,8 @@ export const AssetFromSelectTs = defineComponent({
   },
   computed: {
     ...mapGetters([
-      "originalToken"
+      "originalToken",
+      "swapParams"
     ]),
     fromToken: {
       get() {
@@ -33,7 +34,7 @@ export const AssetFromSelectTs = defineComponent({
       set(token: Token) {
         this.selectedFromToken = token
       }
-    }
+    },
   },
   methods: {
     handleTokenSelect(token: Token) {

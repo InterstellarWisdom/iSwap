@@ -2,6 +2,7 @@ import { defineComponent, ref } from "vue"
 import AssetList from "@/components/asset-list/AssetList.vue"
 import { Token } from "@/interfaces/Token";
 import useModal from "@/composables/useModal";
+import { mapGetters } from "vuex";
 export const AssetToSelectTs = defineComponent({
   components: {
     AssetList
@@ -21,6 +22,9 @@ export const AssetToSelectTs = defineComponent({
     }
   },
   computed: {
+    ...mapGetters([
+      "swapParams"
+    ]),
     toToken: {
       get(): Token {
         return this.selectedToToken

@@ -1,7 +1,7 @@
 <template>
   <div class="token-list__entry--to" @click="assetSelectToggle">
     <a-modal :visible="visible" title="select a token" @ok="handleOk" @cancel="handleCancel" :footer="null">
-      <AssetList @on-token-select="handleTokenSelect"></AssetList>
+      <AssetList @on-token-select="handleTokenSelect" :filter="swapParams.from"></AssetList>
     </a-modal>
     <span class="asset__name">
       <span v-if="toToken">{{toToken.symbol}}</span>
