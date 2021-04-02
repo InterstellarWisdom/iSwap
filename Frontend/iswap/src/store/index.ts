@@ -3,6 +3,7 @@ import tokens from "@/assets/configs/tokens.json"
 import pair from "@/assets/configs/pairs.json"
 import { Token } from "@/interfaces/Token";
 import { Http } from "@/backend/Http";
+import { HttpResponse } from "@/interfaces/HttpResponse";
 export default createStore({
   state: {
     tokenList: [],
@@ -50,8 +51,10 @@ export default createStore({
     },
     reviewSwap: async ({ state, commit }) => {
       const http = new Http()
-      const res = await http.getEstimatedOutMount(state.swapParams.amountIn, [state.swapParams.from.address, state.swapParams.to.address])
-      commit("setAmountOutMin", res)
+      const res: HttpResponse = await http.getEstimatedOutMount(state.swapParams.amountIn, [state.swapParams.from.address, state.swapParams.to.address])
+      if (res.isSuccess) {
+        commit("setAmountOutMin", res.result)
+      }
       return new Promise((resolve, reject) => {
         resolve(res)
       })
@@ -63,7 +66,7 @@ export default createStore({
         return
       }
       const res = await http.swapTokenToToken(amountIn, amountOutMin, [from.address, to.address], "tNULSeBaMjuwkLhA7iqex8Q3Umrznd62xJwvaJ")
-      return new Promise((resolve,reject)=>{
+      return new Promise((resolve, reject) => {
         resolve(res)
       })
     }

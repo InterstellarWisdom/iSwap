@@ -5,6 +5,7 @@ import AssetToSelect from "@/components/asset-to-select/AssetToSelect.vue"
 import SwapConfirm from "@/components/swap-confirm/SwapConfirm.vue"
 import { mapGetters } from "vuex"
 import { message } from "ant-design-vue"
+import { HttpResponse } from "@/interfaces/HttpResponse"
 
 export const SwapTs = defineComponent({
   computed: {
@@ -39,9 +40,14 @@ export const SwapTs = defineComponent({
         return
       }
       this.isGettingQuote = true
-      const estimatedAmount = await this.$store.dispatch("reviewSwap")
+      const res: HttpResponse = await this.$store.dispatch("reviewSwap")
+      if (res.isSuccess) {
+        this.isShowSwapConfirm = true
+      } else {
+        message.info(res.result)
+      }
       this.isGettingQuote = false
-      this.isShowSwapConfirm = true
+
     },
 
     handleSwapConfirm() {

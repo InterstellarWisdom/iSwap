@@ -2,6 +2,7 @@
 import { defineComponent } from "vue"
 import { mapGetters } from "vuex"
 import { message } from "ant-design-vue"
+import { HttpResponse } from "@/interfaces/HttpResponse"
 export const SwapConfirmTs = defineComponent({
   props: {
     visible: {
@@ -21,9 +22,9 @@ export const SwapConfirmTs = defineComponent({
     },
     async confirmSwap() {
       this.isSwapping = true
-      const res = await this.$store.dispatch("confirmSwap")
+      const res: HttpResponse = await this.$store.dispatch("confirmSwap")
       this.isSwapping = false
-      message.info(res.txHash)
+      message.info(res.result.txHash)
       this.$emit("onSwapConfirm", false)
     }
   },
