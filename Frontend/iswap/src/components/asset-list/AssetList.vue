@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="asset-list">
     <li class="asset-item" v-for="token in tokenList" :key="token.address" @click="handleSelect(token)">
       <img class="asset-logo" :src="require(`@/assets/icons/nuls.png`)">
       <div class="asset-info">

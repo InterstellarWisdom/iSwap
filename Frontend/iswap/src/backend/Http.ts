@@ -19,11 +19,6 @@ export class Http {
    */
   private password = "lj2350525"
   /**
-   * Main network asset amount to be transferred in 
-   * 0: there is no this business
-   */
-  private mainNetworkAssetAmount = 0
-  /**
    * the gas limit
    */
   private gasLimit = 2000000
@@ -34,7 +29,7 @@ export class Http {
   /**
    * the router contract address
    */
-  private routerContractAddress = "tNULSeBaMyUL278roMnG33gpaEbDZmAejjJCBW"
+  private routerContractAddress = "tNULSeBaN797eRQbAZWUZePtXo4smEdLb7s79Y"
 
   /**
    * @description:  使路由合约拥有交换一定数量的授权token的权利
@@ -90,14 +85,30 @@ export class Http {
       }
     }
   }
-  swapNulsToToken(amountOutMin: number, path: string[], to: string, deadline?: string): Promise<HttpResponse> {
-    return this.callContract(this.routerContractAddress, "swapExactNULSForTokens", [amountOutMin, path, to])
+  async swapNulsToToken(nulsAmount: number, amountOutMin: number, path: string[], to: string, deadline = "10000000000000"): Promise<HttpResponse> {
+    const methodDesc = "(BigInteger amountOutMin, String[] path, Address to, long deadline) return Ljava/util/HashMap;"
+    const res = await this.callContract(this.routerContractAddress, "swapExactNULSForTokens", [amountOutMin, path, to, deadline], methodDesc, Math.pow(10, 9) * parseFloat(nulsAmount.toString()))
+    return {
+      isSuccess: res.isSuccess,
+      result: res.result.data
+    }
 
   }
-  swapTokenToNuls() {
+  async swapTokenToNuls(amountIn: number, amountOutMin: number, path: string[], to: string, deadline = "10000000000000"): Promise<HttpResponse> {
+    const res = await this.callContract(this.routerContractAddress, "swapTokensForExactNULS", [amountIn, amountOutMin, path, to, deadline])
+    return {
+      isSuccess: res.isSuccess,
+      result: res.result.data
+    }
+  }
+  createPair() {
     //
   }
-  private async callContract(contract: string, method: string, methodParams: Array<any>): Promise<NetworkResponse> {
+  addLiquidity() {
+    //
+  }
+
+  private async callContract(contract: string, method: string, methodParams: Array<any>, methodDesc?: string, nulsAmount = 0): Promise<NetworkResponse> {
     const axiosRes = await axios.post(this.BASE_URL, {
       "id": "1234",
       "jsonrpc": "2.0",
@@ -106,12 +117,12 @@ export class Http {
         this.chainId,
         this.sender,
         this.password,
-        this.mainNetworkAssetAmount,
+        nulsAmount,
         this.gasLimit,
         this.gasPrice,
         contract,
         method,
-        "",
+        methodDesc,
         methodParams,
         "",
         []

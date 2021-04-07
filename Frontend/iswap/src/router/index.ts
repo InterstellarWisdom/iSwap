@@ -8,7 +8,17 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/pool",
     name: "pool",
-    component: () => import("@/views/pool/Pool.vue")
+    component: () => import("@/views/pool/Pool.vue"),
+  },
+  {
+    path: "/create",
+    name: "create",
+    component: () => import("@/views/create-pair/CreatePair.vue")
+  },
+  {
+    path: "/add-liquidity",
+    name: "addLiquidity",
+    component: () => import("@/views/add-liquidity/AddLiquidity.vue")
   }
 ];
 

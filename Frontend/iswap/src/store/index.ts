@@ -1,6 +1,5 @@
 import { createStore } from "vuex";
 import tokens from "@/assets/configs/tokens.json"
-import pair from "@/assets/configs/pairs.json"
 import { Token } from "@/interfaces/Token";
 import { Http } from "@/backend/Http";
 import { HttpResponse } from "@/interfaces/HttpResponse";
@@ -62,13 +61,26 @@ export default createStore({
     confirmSwap: async ({ state, commit }) => {
       const http = new Http()
       const { amountIn, amountOutMin, from, to } = state.swapParams
+
       if (!amountOutMin) {
         return
       }
-      const res = await http.swapTokenToToken(amountIn, amountOutMin, [from.address, to.address], "tNULSeBaMjuwkLhA7iqex8Q3Umrznd62xJwvaJ")
+      let res: HttpResponse
+      if (from.type === "original") {
+        res = await http.swapNulsToToken(amountIn, amountOutMin, [from.address, to.address], "tNULSeBaMjuwkLhA7iqex8Q3Umrznd62xJwvaJ")
+      } else if (to.type === "original") {
+        res = await http.swapTokenToNuls(amountIn, amountOutMin, [from.address, to.address], "tNULSeBaMjuwkLhA7iqex8Q3Umrznd62xJwvaJ")
+      } else {
+        res = await http.swapTokenToToken(amountIn, amountOutMin, [from.address, to.address], "tNULSeBaMjuwkLhA7iqex8Q3Umrznd62xJwvaJ")
+      }
+      console.log(res)
       return new Promise((resolve, reject) => {
         resolve(res)
       })
+    },
+    createPair: ({ state }, payload) => {
+      const http = new Http()
+
     }
 
   },

@@ -1,5 +1,5 @@
 import { defineComponent } from "vue"
-import NumberInput from "@/components/number-input/NumberInput.vue"
+import NumberInput from "@/components/ui/number-input/NumberInput.vue"
 export const SlidePointSelectTs = defineComponent({
   components: {
     NumberInput

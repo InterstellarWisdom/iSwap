@@ -24,7 +24,12 @@ export const SwapConfirmTs = defineComponent({
       this.isSwapping = true
       const res: HttpResponse = await this.$store.dispatch("confirmSwap")
       this.isSwapping = false
-      message.info(res.result.txHash)
+      if (res.isSuccess) {
+        message.info(res.result.txHash)
+      } else {
+        message.info(res.result.message)
+      }
+
       this.$emit("onSwapConfirm", false)
     }
   },

@@ -16,5 +16,23 @@
       "tNULSeBaMzGGResHKNUEHW2DdSPwcQmR4Yqbwj"
     ],
     "pairAddress": "tNULSeBaN3UrXKe8XHEdqwaGG677DiYi4Wc58H"
+  },
+  {
+    "name": "pair3",
+    "desc": "N5 can be interchanged with N6",
+    "pairContracts": [
+      "tNULSeBaN9bmSgFprs3ZoWZDP9Pm7teBnBfP1K",
+      "tNULSeBaN8dwFW1hBr6oq7rjCbhh7dAHVmeuK8"
+    ],
+    "pairAddress": "tNULSeBaNBpjJcLb5iTGhtUsJ3Bv1Q9zFfLvGy"
+  },
+  {
+    "name": "pair4",
+    "desc": "Nuls can be interchanged with N4",
+    "pairContracts": [
+      "tNULSeBaMw4FWPtc5PKDiKxkn3TcoP5TZDP5as",
+      "tNULSeBaN6k1MLRNTs2u8DZgrr6m3ZkpT6mZxF"
+    ],
+    "pairAddress": "tNULSeBaN7vMbYGCH1nFAF59reea36WKF6MPgR"
   }
 ]

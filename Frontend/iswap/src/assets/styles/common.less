@@ -25,12 +25,15 @@ input {
     outline: none;
   }
 }
-a{
+
+a {
   color: unset;
-  &:hover{
+
+  &:hover {
     color: unset;
   }
 }
+
 button {
   border    : none;
   background: transparent;
@@ -50,4 +53,30 @@ button {
 
 .text-left {
   text-align: left;
+}
+
+.ant-modal-body {
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+
+/* 滚动条设置 */
+::-webkit-scrollbar {
+  width           : 5px;
+  height          : 5px;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius   : 5px;
+  background-color: #1990ff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #1990ff;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: #1990ff;
+  cursor          : pointer;
 }

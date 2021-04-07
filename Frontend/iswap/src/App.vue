@@ -3,7 +3,9 @@
     <router-link to="/" :active-class="'active-nav'">Swap</router-link>
     <router-link to="/pool" :active-class="'active-nav'">Pool</router-link>
   </div>
-  <router-view />
+  <div class="main-container">
+    <router-view />
+  </div>
 </template>
 
 <style lang="less">
