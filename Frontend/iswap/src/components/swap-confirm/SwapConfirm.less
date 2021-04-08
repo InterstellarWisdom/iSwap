@@ -1,5 +1,7 @@
+@import url("../../assets/styles/theme.less");
+
 .swap__buttons {
-  button {
+  /*   button {
     display         : flex;
     align-items     : center;
     justify-content : center;
@@ -14,9 +16,36 @@
     &:hover {
       cursor          : pointer;
       background-color: lighten(#1990ff, 10%);
-      box-shadow      : 0 0 5px 3px rgba(0, 0, 0,0.1);
+      box-shadow      : 0 0 5px 3px rgba(0, 0, 0, 0.1);
       transition      : all linear 0.1s;
     }
+  } */
+}
+
+.info {
+  margin-bottom: 20px;
+
+  .arrow {
+    padding: 10px 0;
   }
 
+  .token-amount__in {
+    font-size: 24px;
+    color    : @heading-color;
+  }
+
+  .token-amount__out {
+    font-size: 24px;
+    color    : @heading-color;
+
+  }
+
+  .token-name {
+    font-size: 20px;
+    color    : @heading-color-secondary;
+  }
+
+  .tip {
+    color: @text-color-secondary;
+  }
 }

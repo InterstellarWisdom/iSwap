@@ -18,7 +18,7 @@
       </div>
       <AssetToSelect></AssetToSelect>
     </div>
-<!--     <div class="swap__options">
+    <!--     <div class="swap__options">
       <div class="swap__options--title">options</div>
       <div>
         <div class="text-left">滑点</div>
@@ -27,7 +27,7 @@
     </div> -->
     <a-spin :spinning="isGettingQuote">
       <div class="swap__buttons">
-        <button @click="handleSwap">Review Swap</button>
+        <a-button @click="handleSwap" type="primary" block size="large">Review Swap</a-button>
       </div>
     </a-spin>
 

@@ -1,0 +1,16 @@
+@import url("../../assets/styles/theme.less");
+
+.connect-type-nav {
+  display        : flex;
+  align-items    : center;
+  justify-content: space-between;
+
+  &>div {
+    cursor: pointer;
+    width : 50%;
+
+    &.active {
+      color: @primary-color;
+    }
+  }
+}
