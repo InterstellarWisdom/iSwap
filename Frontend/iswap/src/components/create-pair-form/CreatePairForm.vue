@@ -12,16 +12,16 @@
           d="M1023.3604 475.772642H548.227358V0.6396h-73.094316v475.133042H0v73.094316h475.133042v475.133042h73.094316V548.866958H1023.3604z"
           p-id="5452" fill="#8a8a8a"></path>
       </svg>
-    </div>
+    </div> 
     <div class="b-token">
       <TokenSelectAndInput @on-token-select-and-input="handleTokenSelectAndInput" :id="'2'"></TokenSelectAndInput>
     </div>
     <div class="create__button">
       <a-spin :spinning="isCreating">
-        <button @click="handleSwap">Create Pair</button>
+        <button @click="isInputtingPass=true">Create Pair</button>
       </a-spin>
     </div>
-
+    <PasswordForm :visible="isInputtingPass" @on-password-input="handlePasswordInput"></PasswordForm>
   </div>
 
 </template>

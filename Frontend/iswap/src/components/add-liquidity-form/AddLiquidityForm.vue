@@ -2,7 +2,7 @@
   <div class="add-liquidity-form">
     <div class="title">Add liquidity</div>
     <div>
-      <TokenSelectAndInput></TokenSelectAndInput>
+      <TokenSelectAndInput @on-token-select-and-input="handleTokenSelectAndInput" :id="'1'"></TokenSelectAndInput>
     </div>
     <div class="add-liquidity-symbol">
 
@@ -15,11 +15,11 @@
 
     </div>
     <div>
-      <TokenSelectAndInput></TokenSelectAndInput>
+      <TokenSelectAndInput @on-token-select-and-input="handleTokenSelectAndInput" :id="'2'"></TokenSelectAndInput>
     </div>
     <div class="add-liquidity-button">
       <a-spin :spinning="isAdding">
-        <button @click="handleSwap">Add liquidity</button>
+        <button @click="handleAdd">Add liquidity</button>
       </a-spin>
     </div>
   </div>

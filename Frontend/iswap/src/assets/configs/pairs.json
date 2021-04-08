@@ -1,23 +1,5 @@
 [
   {
-    "name": "pair1",
-    "desc": "N1 can be interchanged with N2",
-    "pairContracts": [
-      "tNULSeBaN8geFsWip2BPG2YWDhuzh8ryCbqVvC",
-      "tNULSeBaMy85YZWt1PHeWD91dLfhf8WwkJsw3S"
-    ],
-    "pairAddress": "tNULSeBaN5ijT9BBCgpB4w9H7onuf6bEeFrstS"
-  },
-  {
-    "name": "pair2",
-    "desc": "N2 can be interchanged with N3",
-    "pairContracts": [
-      "tNULSeBaMy85YZWt1PHeWD91dLfhf8WwkJsw3S",
-      "tNULSeBaMzGGResHKNUEHW2DdSPwcQmR4Yqbwj"
-    ],
-    "pairAddress": "tNULSeBaN3UrXKe8XHEdqwaGG677DiYi4Wc58H"
-  },
-  {
     "name": "pair3",
     "desc": "N5 can be interchanged with N6",
     "pairContracts": [

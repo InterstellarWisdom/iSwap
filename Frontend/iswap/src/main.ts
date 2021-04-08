@@ -2,8 +2,8 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import { Modal, Spin, Button } from "ant-design-vue"
+import { Modal, Spin, Button, Input } from "ant-design-vue"
 import 'ant-design-vue/dist/antd.css';
 import './assets/styles/common.less';
 
-createApp(App).use(store).use(router).use(Modal).use(Spin).use(Button).mount("#app");
+createApp(App).use(store).use(router).use(Modal).use(Spin).use(Button).use(Input).mount("#app");
