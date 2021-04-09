@@ -22,8 +22,8 @@
           <div>
             <span class="token-amount__out">{{swapParams.amountOutMin}}</span><span></span>
           </div>
-
         </div>
+        <div></div>
       </div>
       <a-spin :spinning="isSwapping">
         <div class="swap__buttons">

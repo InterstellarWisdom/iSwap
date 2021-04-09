@@ -2,8 +2,8 @@
   <a-modal :visible="visible" title="连接一个钱包" @ok="closeModal" @cancel="closeModal" :footer="null">
     <a-space direction="vertical" style="width: 100%;" :size="30">
       <div class="connect-type-nav text-center">
-        <div @click="connectTypeToggle('create')" :class="{active:connectType==='create'}">新建一个钱包</div>
         <div @click="connectTypeToggle('import')" :class="{active:connectType==='import'}">私钥导入</div>
+        <div @click="connectTypeToggle('create')" :class="{active:connectType==='create'}">新建一个钱包</div>
       </div>
       <div>
         <div v-if="connectType==='import'">
