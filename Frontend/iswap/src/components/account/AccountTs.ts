@@ -2,10 +2,12 @@ import { defineComponent } from "vue";
 import { mapGetters } from "vuex";
 import AccountConnectForm from "@/components/account-connect-form/AccountConnectForm.vue";
 import TokenBalance from "@/components/token-balance/TokenBalance.vue";
+import AddressDisplay from "@/components/ui/address-display/AddressDisplay.vue";
 export const AccountTs = defineComponent({
   components: {
     AccountConnectForm,
-    TokenBalance
+    TokenBalance,
+    AddressDisplay
   },
   computed: {
     ...mapGetters([

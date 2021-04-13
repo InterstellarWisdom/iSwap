@@ -62,7 +62,7 @@ export default createStore({
     },
     getTokenList: ({ commit }) => {
       const _tokens = tokens.map((token) => {
-        return new Token(token.symbol, token.name, token.address, token.icon, token.type)
+        return new Token(token.symbol, token.name, token.address, token.icon, token.type, token.decimal)
       })
       commit("setTokenList", _tokens)
     },
@@ -104,22 +104,39 @@ export default createStore({
      * payload[3] is amountB
      * payload[4] is password
      */
-    createPair: async ({ getters }, payload: any[]) => {
+    createPair: async ({ getters, dispatch }, payload: any[]) => {
       const http = new Http(getters["address"], payload[4])
       const createRes = await http.createPair(payload[0].address, payload[2].address)
       if (createRes.isSuccess) {
-        const addRes = await http.addLiquidity(payload[0], payload[1], payload[2], payload[3])
+        const addRes = await dispatch("addLiquidity", payload)
         return Promise.resolve(addRes)
       } else {
         return Promise.resolve(createRes)
       }
 
     },
-    checkPair: ({ state }, payload) => {
-      //
-    },
-    addLiquidity: ({ state }, payload) => {
-      //
+
+
+    /**
+     * payload[0] is tokenA
+     * payload[1] is amountA
+     * payload[2] is tokenB
+     * payload[3] is amountB
+     * payload[4] is password
+     */
+    addLiquidity: async ({ getters }, payload) => {
+      const http = new Http(getters["address"], payload[4])
+      let res: HttpResponse = null
+      if (payload[0].type === "original" || payload[1].type === "original") {
+        if (payload[0].type === "original") {
+          res = await http.addLiquidityNuls(payload[1], payload[2], payload[3])
+        } else {
+          res = await http.addLiquidityNuls(payload[3], payload[0], payload[1])
+        }
+      } else {
+        res = await http.addLiquidity(payload[0], payload[1], payload[2], payload[3])
+      }
+      return Promise.resolve(res)
     },
     removeLiquidity: ({ state }, payload) => {
       //
@@ -160,6 +177,13 @@ export default createStore({
       if (res.isSuccess) {
         res.result = Helper.handleAccuracy(res.result, 10)
       }
+      return Promise.resolve(res)
+    },
+    /**
+     * @description: payload is contract address[]
+     */
+    getTokensBalance: async ({ getters }, payload) => {
+      const res = await Http.getTokensBalance(payload, getters["address"])
       return Promise.resolve(res)
     }
   },

@@ -124,7 +124,14 @@ export class Http {
       result: res.result.data
     }
   }
-  async createPair(addressA: string, AddressB: string): Promise<HttpResponse> {
+  async createPair(addressA: string, addressB: string): Promise<HttpResponse> {
+    const checkRes = await Http.checkPair(addressA, addressB)
+    if (checkRes.isSuccess) {
+      return {
+        isSuccess: false,
+        result: Error.PAIR_IS_EXISTED
+      }
+    }
     const deployRes = await this.deployPair()
     if (!deployRes.isSuccess) {
       return {
@@ -139,11 +146,14 @@ export class Http {
         }, 2000);
       })
       const contractAddress = deployRes.result.contractAddress
-      const callRes = await this.callContract(Http.factoryContractAddress, "createPair", [contractAddress, addressA, AddressB])
-      return {
-        isSuccess: callRes.isSuccess,
-        result: callRes.isSuccess ? callRes.result.data : callRes.result.message
+      const callRes = await this.callContract(Http.factoryContractAddress, "createPair", [contractAddress, addressA, addressB])
+      if (callRes.isSuccess) {
+        return {
+          isSuccess: callRes.isSuccess,
+          result: callRes.isSuccess ? callRes.result.data : callRes.result.message
+        }
       }
+
     }
     return {
       isSuccess: false,
@@ -164,11 +174,14 @@ export class Http {
           resolve(null)
         }, 2000);
       })
-      const callRes = await this.callContract(Http.routerContractAddress, "addLiquidityNUlS", [token.address, tokenAmount, tokenAmount, nulsAmount, this.sender], "", parseFloat(nulsAmount))
-      return {
-        isSuccess: callRes.isSuccess,
-        result: callRes.isSuccess ? callRes.result.data : callRes.result.message
+      const callRes = await this.callContract(Http.routerContractAddress, "addLiquidityNUlS", [token.address, tokenAmount, tokenAmount, nulsAmount, this.sender, "100000000000"], "", parseFloat(nulsAmount))
+      if (callRes.isSuccess) {
+        return {
+          isSuccess: callRes.isSuccess,
+          result: callRes.isSuccess ? callRes.result.data : callRes.result.message
+        }
       }
+
     }
     return {
       isSuccess: false,
@@ -196,10 +209,12 @@ export class Http {
           resolve(null)
         }, 2000)
       })
-      const callRes = await this.callContract(Http.routerContractAddress, "addLiquidity", [tokenA.address, tokenB.address, amountA, amountB, amountA, amountB, this.sender])
-      return {
-        isSuccess: callRes.isSuccess,
-        result: callRes.isSuccess ? callRes.result.data : callRes.result.message
+      const callRes = await this.callContract(Http.routerContractAddress, "addLiquidity", [tokenA.address, tokenB.address, amountA, amountB, amountA, amountB, this.sender, "100000000000"])
+      if (callRes.isSuccess) {
+        return {
+          isSuccess: callRes.isSuccess,
+          result: callRes.isSuccess ? callRes.result.data.txHash : callRes.result.message
+        }
       }
     }
     return {
@@ -207,7 +222,7 @@ export class Http {
       result: Error.NETWORK_ERROR
     }
   }
-  async checkPair(addressA: string, addressB: string): Promise<HttpResponse> {
+  static async checkPair(addressA: string, addressB: string): Promise<HttpResponse> {
     const res = await Http.invokeView(Http.factoryContractAddress, "getPairAddress", "", [addressA, addressB])
     return {
       isSuccess: res.isSuccess,
@@ -236,10 +251,13 @@ export class Http {
         }, 2000)
       })
       const callRes = await this.callContract(Http.routerContractAddress, "removeLiquidity", [tokenA.address, tokenB.address, liquidity, amountA, amountB, this.sender])
-      return {
-        isSuccess: callRes.isSuccess,
-        result: callRes.isSuccess ? callRes.result.data : callRes.result.message
+      if (callRes.isSuccess) {
+        return {
+          isSuccess: callRes.isSuccess,
+          result: callRes.isSuccess ? callRes.result.data : callRes.result.message
+        }
       }
+
     }
     return {
       isSuccess: false,
@@ -261,9 +279,11 @@ export class Http {
         }, 2000)
       })
       const callRes = await this.callContract(Http.routerContractAddress, "removeLiquidityNULS", [token.address, liquidity, tokenAmount, nulsAmount])
-      return {
-        isSuccess: callRes.isSuccess,
-        result: callRes.isSuccess ? callRes.result.data : callRes.result.message
+      if (callRes.isSuccess) {
+        return {
+          isSuccess: callRes.isSuccess,
+          result: callRes.isSuccess ? callRes.result.data : callRes.result.message
+        }
       }
     }
     return {
@@ -368,21 +388,26 @@ export class Http {
     }
   }
   static async getTokenBalance(contractAddress: string, address: string): Promise<HttpResponse> {
-    const axiosRes = await axios.post(Http.BASE_URL, {
-      "jsonrpc": "2.0",
-      "method": "invokeView",
-      "params": [
-        2,
-        contractAddress,
-        "balanceOf",
-        "",
-        [address]
-      ]
-    })
-    const httpRes = Http.handleAxiosRes(axiosRes)
+    const res = await Http.invokeView(contractAddress, "balanceOf", "", [address])
     return {
-      isSuccess: httpRes.isSuccess,
-      result: httpRes.isSuccess ? httpRes.result.data : httpRes.result.message
+      isSuccess: res.isSuccess,
+      result: res.isSuccess ? res.result.data : res.result.message
+    }
+  }
+  static async getTokensBalance(contactAddresses: string[], address: string): Promise<HttpResponse> {
+    const resArray = await Promise.all(contactAddresses.map(async (contract) => {
+      const res = await Http.getTokenBalance(contract, address)
+      return {
+        isSuccess: res.isSuccess,
+        result: res.isSuccess ? {
+          pairAddress: contract,
+          liquidity: res.result?.result
+        } : null
+      }
+    }))
+    return {
+      isSuccess: resArray.every(httpRes => httpRes.isSuccess),
+      result: resArray.map(httpRes => httpRes.result)
     }
   }
   private static handleAxiosRes(axiosRes: AxiosResponse): NetworkResponse {
@@ -424,7 +449,7 @@ export class Http {
       }
     } else {
       res.isSuccess = false
-      res.result.message = "Network error!"
+      res.result.message = Error.NETWORK_ERROR
     }
     return res
   }

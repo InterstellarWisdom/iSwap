@@ -23,7 +23,10 @@
             <span class="token-amount__out">{{swapParams.amountOutMin}}</span><span></span>
           </div>
         </div>
-        <div></div>
+        <div>
+          <PairRatio :tokenA="swapParams.from" :amountA="swapParams.amountIn" :tokenB="swapParams.to"
+            :amountB="swapParams.amountOutMin"></PairRatio>
+        </div>
       </div>
       <a-spin :spinning="isSwapping">
         <div class="swap__buttons">

@@ -19,9 +19,10 @@
     </div>
     <div class="add-liquidity-button">
       <a-spin :spinning="isAdding">
-        <button @click="handleAdd">Add liquidity</button>
+        <button @click="isInputtingPass=true">Add liquidity</button>
       </a-spin>
     </div>
+    <PasswordForm :visible="isInputtingPass" @on-password-input="handlePasswordInput"></PasswordForm>
   </div>
 
 </template>

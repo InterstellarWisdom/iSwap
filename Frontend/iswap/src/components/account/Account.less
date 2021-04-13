@@ -1,0 +1,44 @@
+@import url("../../assets/styles/theme.less");
+
+.account-container {
+  display    : flex;
+  align-items: center;
+}
+
+.account-info {
+  background   : rgb(237, 238, 242);
+  border-radius: 12px;
+  font-size    : 16px;
+  display      : flex;
+  align-items  : center;
+
+  .address__wrapper {
+    background   : white;
+    padding      : 8px;
+    border       : 1px solid @border-color-base;
+    border-radius: 12px;
+    cursor       : pointer;
+
+    &:hover {
+      border-color: @primary-color;
+    }
+  }
+
+  .token-balance {
+    padding-left: 12px;
+  }
+
+  .token-name {
+    padding: 0 8px;
+  }
+}
+
+.more {
+  display         : flex;
+  align-items     : center;
+  border-radius   : 0.5rem;
+  background-color: rgb(237, 238, 242);
+  padding         : 0.5rem;
+  margin-left     : 15px;
+  cursor          : pointer;
+}

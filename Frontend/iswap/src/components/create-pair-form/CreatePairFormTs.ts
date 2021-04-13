@@ -4,6 +4,7 @@ import { HttpResponse } from "@/interfaces/HttpResponse"
 import { notification } from "ant-design-vue"
 import TokenSelectAndInput from "@/components/token-select-and-input/TokenSelectAndInput.vue"
 import PasswordForm from "@/components/password-form/PasswordForm.vue"
+import { Error } from "@/helper/Error"
 export const CreatePairFormTs = defineComponent({
   components: {
     TokenSelectAndInput,
@@ -50,6 +51,12 @@ export const CreatePairFormTs = defineComponent({
             res.result.toString(),
           duration: 0,
         });
+        if (!res.isSuccess && res.result === Error.PAIR_IS_EXISTED) {
+          this.$router.push({
+            name: "addLiquidity"
+          })
+          return
+        }
         this.isCreating = false
       }
     }

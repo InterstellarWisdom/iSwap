@@ -13,7 +13,7 @@
         </router-link>
       </div>
     </div>
-    <LiquidityList class="liquidity-list text-center"></LiquidityList>
+    <LiquidityList class="liquidity-list"></LiquidityList>
   </div>
 </template>
 <script lang="ts">

@@ -4,9 +4,11 @@ import { mapGetters } from "vuex"
 import { message } from "ant-design-vue"
 import { HttpResponse } from "@/interfaces/HttpResponse"
 import PasswordForm from "@/components/password-form/PasswordForm.vue"
+import PairRatio from "@/components/pair-ratio/PairRatio.vue";
 export const SwapConfirmTs = defineComponent({
   components: {
-    PasswordForm
+    PasswordForm,
+    PairRatio
   },
   props: {
     visible: {
@@ -29,7 +31,7 @@ export const SwapConfirmTs = defineComponent({
       if (pass) {
         this.confirmSwap(pass)
       }
-      this.isInputtingPass=false
+      this.isInputtingPass = false
     },
     async confirmSwap(password: string) {
       this.isSwapping = true
