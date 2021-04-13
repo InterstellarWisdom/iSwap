@@ -1,0 +1,42 @@
+@import url("../../assets/styles/theme.less");
+
+.account-manage-modal {
+  border       : 1px solid @border-color-base;
+  border-radius: 10px;
+  padding      : 20px 10px;
+}
+
+.title {
+  font-size: 20px;
+  color:@heading-color-secondary;
+}
+
+.address {
+  padding  : 15px 0;
+  font-size: 24px;
+}
+
+.buttons {
+  display        : flex;
+  align-items    : center;
+  justify-content: left;
+
+  &>div:nth-child(1) {
+    margin-right: 20px;
+  }
+
+  .button-container {
+    display    : flex;
+    align-items: center;
+    color      : @heading-color-secondary;
+    cursor     : pointer;
+
+    &:hover {
+      color: @heading-color;
+    }
+  }
+
+  .button-text {
+    margin-left: 5px;
+  }
+}

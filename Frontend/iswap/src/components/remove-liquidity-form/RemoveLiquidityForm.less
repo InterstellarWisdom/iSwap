@@ -1,3 +1,5 @@
+@import url("../../assets/styles/theme.less");
+
 .remove-liquidity-form {
   max-width: 420px;
   margin   : 0 auto;
@@ -10,9 +12,27 @@
 }
 
 .remove-ratio {
-  font-size  : 24px;
-  font-weight: 600;
-  text-align: center;
+  position       : relative;
+  height         : 40px;
+  display        : flex;
+  align-items    : center;
+  justify-content: center;
+
+  .remove-ratio-title {
+    font-size  : 16px;
+    color      : @heading-color-secondary;
+    position   : absolute;
+    left       : 0;
+    top        : 5px;
+    height     : 30px;
+    display    : flex;
+    align-items: center;
+  }
+
+  .remove-ratio-value {
+    font-size  : 24px;
+    font-weight: 600;
+  }
 }
 
 .pooled-token {
@@ -25,4 +45,12 @@
   display        : flex;
   align-items    : center;
   justify-content: space-between;
+}
+
+
+.slider-container,
+.pooled-info {
+  border       : 1px solid @border-color-base;
+  border-radius: 10px;
+  padding      : 15px 20px;
 }
