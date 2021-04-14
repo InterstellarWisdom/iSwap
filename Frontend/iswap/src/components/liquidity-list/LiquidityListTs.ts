@@ -20,10 +20,18 @@ export const LiquidityListTs = defineComponent({
   },
   methods: {
     async getLiquidityList() {
-      const res = await this.$store.dispatch("getTokensBalance", pairs.map(pair => pair.pairAddress))
-      /*    if(res.isSuccess){
-           (res.result as Array<{liquidity:string,pairAddress:string}>).
-         } */
+      const resArray = await this.$store.dispatch("getTokensBalance", pairs.map(pair => pair.pairAddress))
+      if (resArray.isSuccess) {
+        this.liquidityList = (resArray.result as Array<{ liquidity: string, pairAddress: string }>)
+          .filter(res => parseFloat(res.liquidity) > 0)
+          .map((res) => {
+            const pair = pairs.find(pair => {
+              pair.pairAddress === res.pairAddress
+            })
+            pair.liquidity = res.liquidity
+            return pair
+          })
+      }
     }
   },
   mounted() {

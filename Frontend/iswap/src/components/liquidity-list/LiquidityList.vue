@@ -1,15 +1,15 @@
 <template>
   <div>
     <a-collapse :expand-icon-position="'right'">
-      <a-collapse-panel key="1" :style="panelStyle">
+      <a-collapse-panel :style="panelStyle" v-for="(liquidityInfo,index) in liquidityList" :key="index">
         <template #header>
           <div class="header">
             <img :src="url" />
             <img :src="url" class="second" />
-            Nuls/N1
+            <span class="pair">{{liquidityInfo.name}}</span>
           </div>
         </template>
-        <LiquidityDetail></LiquidityDetail>
+        <LiquidityDetail :liquidityInfo="liquidityInfo"></LiquidityDetail>
       </a-collapse-panel>
     </a-collapse>
   </div>

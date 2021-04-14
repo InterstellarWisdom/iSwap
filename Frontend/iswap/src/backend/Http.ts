@@ -67,36 +67,28 @@ export class Http {
       result: res.isSuccess ? estimatedAmount : res.result.message
     }
   }
-  async swapTokenToToken(amountIn: number, amountOutMin: number, path: string[], to: string): Promise<HttpResponse> {
-    const firstRes = await this.callContract(Http.routerContractAddress, "swapExactTokensForToken", [amountIn, amountOutMin, path, to])
-    if (firstRes.isSuccess) {
-      return { isSuccess: firstRes.isSuccess, result: firstRes.result.data }
-    } else {
-      const msg = firstRes.result.message
-      if (msg.search(Error.INSUFFICIENT_APPROVED_TOKEN) > -1) {
-        const res = await this.authorizedToRouterContract(path[0], amountIn)
-        if (!res.isSuccess) {
-          return res
-        }
-        for (let i = 0; i < 10; i++) {
-          await new Promise((resolve) => {
-            setTimeout(() => {
-              resolve(null)
-            }, 2000);
-          })
-          const swapRes = await this.callContract(Http.routerContractAddress, "swapExactTokensForToken", [amountIn, amountOutMin, path, to])
-          if (swapRes.isSuccess) {
-            return {
-              isSuccess: swapRes.isSuccess,
-              result: swapRes.result.data
-            }
-          }
-        }
+  async swapTokenToToken(amountIn: number, amountOutMin: number, path: string[], to: string, deadline = "100000000000"): Promise<HttpResponse> {
+    const res = await this.authorizedToRouterContract(path[0], amountIn)
+    if (!res.isSuccess) {
+      return res
+    }
+    for (let i = 0; i < 10; i++) {
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(null)
+        }, 2000);
+      })
+      const swapRes = await this.callContract(Http.routerContractAddress, "swapExactTokensForToken", [amountIn, amountOutMin, path, to, deadline])
+      if (swapRes.isSuccess) {
         return {
-          isSuccess: false,
-          result: Error.NETWORK_ERROR
+          isSuccess: swapRes.isSuccess,
+          result: swapRes.result.data
         }
       }
+    }
+    return {
+      isSuccess: false,
+      result: Error.NETWORK_ERROR
     }
   }
   async swapNulsToToken(nulsAmount: number, amountOutMin: number, path: string[], to: string, deadline = "10000000000000"): Promise<HttpResponse> {

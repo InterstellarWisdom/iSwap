@@ -1,17 +1,16 @@
 import { defineComponent } from "vue"
 import TokenSelectAndInput from "@/components/token-select-and-input/TokenSelectAndInput.vue"
-import PasswordForm from "@/components/password-form/PasswordForm.vue";
+import PasswordFormModal from "@/components/password-form-modal/PasswordFormModal.vue";
 import { notification } from "ant-design-vue"
 import { HttpResponse } from "@/interfaces/HttpResponse"
 export const AddLiquidityFormTs = defineComponent({
   components: {
     TokenSelectAndInput,
-    PasswordForm
+    PasswordFormModal
   },
   data() {
     return {
       isAdding: false,
-      isInputtingPass: false,
       tokenA: null,
       amountA: null,
       tokenB: null,
@@ -28,11 +27,8 @@ export const AddLiquidityFormTs = defineComponent({
         this.amountB = amount
       }
     },
-    handlePasswordInput(pass: string | boolean) {
-      if (pass) {
-        this.handleAdd(pass)
-      }
-      this.isInputtingPass = false
+    handlePasswordInput(pass: string) {
+      this.handleAdd(pass)
     },
     async handleAdd(password: string) {
       if (this.tokenA && this.amountA && this.tokenB && this.amountB) {
@@ -44,7 +40,6 @@ export const AddLiquidityFormTs = defineComponent({
           duration: 0
         })
         this.isAdding = false
-
       }
     }
   }

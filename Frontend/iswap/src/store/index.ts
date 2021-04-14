@@ -79,7 +79,8 @@ export default createStore({
      * @description:payload is password
      */
     confirmSwap: async ({ state, getters }, payload: string) => {
-      const http = new Http(getters["address"], payload)
+      const address = getters["address"]
+      const http = new Http(address, payload)
       const { amountIn, amountOutMin, from, to } = state.swapParams
 
       if (!amountOutMin) {
@@ -87,15 +88,13 @@ export default createStore({
       }
       let res: HttpResponse
       if (from.type === "original") {
-        res = await http.swapNulsToToken(amountIn, amountOutMin, [from.address, to.address], "tNULSeBaMjuwkLhA7iqex8Q3Umrznd62xJwvaJ")
+        res = await http.swapNulsToToken(amountIn, amountOutMin, [from.address, to.address], address)
       } else if (to.type === "original") {
-        res = await http.swapTokenToNuls(amountIn, amountOutMin, [from.address, to.address], "tNULSeBaMjuwkLhA7iqex8Q3Umrznd62xJwvaJ")
+        res = await http.swapTokenToNuls(amountIn, amountOutMin, [from.address, to.address], address)
       } else {
-        res = await http.swapTokenToToken(amountIn, amountOutMin, [from.address, to.address], "tNULSeBaMjuwkLhA7iqex8Q3Umrznd62xJwvaJ")
+        res = await http.swapTokenToToken(amountIn, amountOutMin, [from.address, to.address], address)
       }
-      return new Promise((resolve, reject) => {
-        resolve(res)
-      })
+      return Promise.resolve(res)
     },
     /**
      * payload[0] is tokenA

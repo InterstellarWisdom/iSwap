@@ -3,7 +3,7 @@
     <a-space direction="vertical" :size="8" style="width: 100%;">
       <div class="liquidity-detail-item">
         <div class="item-head">Your total pool token:</div>
-        <div class="item-detail">0.02894</div>
+        <div class="item-detail">{{liquidityInfo.liquidity}}</div>
       </div>
       <div class="liquidity-detail-item">
         <div class="item-head">Pooled UNI:</div>

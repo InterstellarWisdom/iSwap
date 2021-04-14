@@ -30,11 +30,12 @@
       </div>
       <a-spin :spinning="isSwapping">
         <div class="swap__buttons">
-          <a-button type="primary" @click="isInputtingPass=true" block size="large">Confirm Swap</a-button>
+          <PasswordFormModal @on-password-input="handlePassInput">
+            <a-button type="primary" block size="large">Confirm Swap</a-button>
+          </PasswordFormModal>
         </div>
       </a-spin>
     </a-modal>
-    <PasswordForm :visible="isInputtingPass" @on-password-input="handlePassInput"></PasswordForm>
   </div>
 
 </template>

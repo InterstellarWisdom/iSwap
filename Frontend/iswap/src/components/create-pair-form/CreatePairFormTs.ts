@@ -3,17 +3,16 @@ import { mapGetters } from "vuex"
 import { HttpResponse } from "@/interfaces/HttpResponse"
 import { notification } from "ant-design-vue"
 import TokenSelectAndInput from "@/components/token-select-and-input/TokenSelectAndInput.vue"
-import PasswordForm from "@/components/password-form/PasswordForm.vue"
+import PasswordFormModal from "@/components/password-form-modal/PasswordFormModal.vue"
 import { Error } from "@/helper/Error"
 export const CreatePairFormTs = defineComponent({
   components: {
     TokenSelectAndInput,
-    PasswordForm
+    PasswordFormModal
   },
   data() {
     return {
       isCreating: false,
-      isInputtingPass: false,
       tokenA: null,
       amountA: null,
       tokenB: null,
@@ -35,11 +34,8 @@ export const CreatePairFormTs = defineComponent({
         this.amountB = amount
       }
     },
-    handlePasswordInput(pass: string | boolean) {
-      if (pass) {
+    handlePasswordInput(pass: string) {
         this.createPair(pass)
-      }
-      this.isInputtingPass = false
     },
     async createPair(password: string) {
       if (this.tokenA && this.amountA && this.tokenB && this.amountB) {

@@ -26,9 +26,12 @@ export const TokenBalanceTs = defineComponent({
   },
   mounted() {
     this.getBalance()
-    setInterval(() => {
-      this.getBalance()
-    }, 10000)
+    /**
+     * setInterval(() => {
+          this.getBalance()
+        }, 10000)
+     */
+
   },
   watch: {
     contractAddress(newAddress) {

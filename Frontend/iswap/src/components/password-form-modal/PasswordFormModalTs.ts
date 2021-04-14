@@ -1,11 +1,11 @@
+import useModal from "@/composables/useModal"
 import { message } from "ant-design-vue"
 import { defineComponent } from "vue"
-export const PasswordFormTs = defineComponent({
-  props: {
-    visible: {
-      type: Boolean,
-      default: false,
-      required: true
+export const PasswordFormModalTs = defineComponent({
+  setup() {
+    const { visible, showModal, handleOk, handleCancel } = useModal()
+    return {
+      visible, showModal, handleOk, handleCancel
     }
   },
   data() {
@@ -14,9 +14,6 @@ export const PasswordFormTs = defineComponent({
     }
   },
   methods: {
-    closeModal() {
-      this.$emit("on-password-input", false)
-    },
     handlePassInput() {
       if (!this.password) {
         return message.info("请输入密码")
@@ -25,6 +22,7 @@ export const PasswordFormTs = defineComponent({
         return message.info("请输入至少八位密码")
       }
       this.$emit("on-password-input", this.password)
+      this.handleCancel()
     }
   }
 })
