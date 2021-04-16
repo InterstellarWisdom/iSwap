@@ -1,11 +1,13 @@
 import { defineComponent, ref } from "vue"
 import AssetList from "@/components/asset-list/AssetList.vue"
+import TokenBalance from "@/components/token-balance/TokenBalance.vue"
 import { Token } from "@/interfaces/Token";
 import useModal from "@/composables/useModal"
 import { mapGetters } from "vuex";
 export const AssetFromSelectTs = defineComponent({
   components: {
-    AssetList
+    AssetList,
+    TokenBalance
   },
   setup() {
     const { visible, showModal, handleOk, handleCancel } = useModal()

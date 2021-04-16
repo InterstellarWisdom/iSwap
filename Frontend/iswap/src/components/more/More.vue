@@ -1,9 +1,11 @@
 <template>
   <div>
-    <a-popover  trigger="click" placement="bottomRight">
+    <a-popover trigger="click" placement="bottomRight" v-model:visible="visible">
       <template #content>
-        <div>
-          <a-button type="link">备份钱包</a-button>
+        <div @click="visible=false">
+          <BackupModal>
+            <a-button type="link">备份钱包</a-button>
+          </BackupModal>
         </div>
       </template>
       <div class="more-button">

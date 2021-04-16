@@ -207,6 +207,13 @@ export class Http {
           isSuccess: callRes.isSuccess,
           result: callRes.isSuccess ? callRes.result.data.txHash : callRes.result.message
         }
+      } else {
+        if (callRes.result.message.indexOf(Error.CONTRACT_ERROR) > -1) {
+          return {
+            isSuccess: callRes.isSuccess,
+            result: callRes.result.message
+          }
+        }
       }
     }
     return {
@@ -221,15 +228,17 @@ export class Http {
       result: res.isSuccess ? res.result.data : res.result.message
     }
   }
-  async removeLiquidity(liquidity: string, tokenA: Token, amountA: string, tokenB: Token, amountB: string): Promise<HttpResponse> {
-    const authResA = await this.authorizedToRouterContract(tokenA.address, parseFloat(amountA))
+  async removeLiquidity(liquidity: string, tokenA: Token, amountA: string, tokenB: Token, amountB: string, deadline = "100000000000"): Promise<HttpResponse> {
+    const _amountA = Math.floor(parseFloat(amountA))
+    const _amountB = Math.floor(parseFloat(amountB))
+    const authResA = await this.authorizedToRouterContract(tokenA.address, _amountA)
     if (!authResA.isSuccess) {
       return {
         isSuccess: false,
         result: `${tokenA.symbol} 授权失败`
       }
     }
-    const authResB = await this.authorizedToRouterContract(tokenB.address, parseFloat(amountB))
+    const authResB = await this.authorizedToRouterContract(tokenB.address, _amountB)
     if (!authResB.isSuccess) {
       return {
         isSuccess: false,
@@ -242,7 +251,8 @@ export class Http {
           resolve(null)
         }, 2000)
       })
-      const callRes = await this.callContract(Http.routerContractAddress, "removeLiquidity", [tokenA.address, tokenB.address, liquidity, amountA, amountB, this.sender])
+      console.log(Math.floor(parseFloat(amountA)))
+      const callRes = await this.callContract(Http.routerContractAddress, "removeLiquidity", [tokenA.address, tokenB.address, liquidity, _amountA, _amountB, this.sender, deadline])
       if (callRes.isSuccess) {
         return {
           isSuccess: callRes.isSuccess,
@@ -383,7 +393,7 @@ export class Http {
     const res = await Http.invokeView(contractAddress, "balanceOf", "", [address])
     return {
       isSuccess: res.isSuccess,
-      result: res.isSuccess ? res.result.data : res.result.message
+      result: res.isSuccess ? res.result.data.result : res.result.message
     }
   }
   static async getTokensBalance(contactAddresses: string[], address: string): Promise<HttpResponse> {
@@ -393,13 +403,38 @@ export class Http {
         isSuccess: res.isSuccess,
         result: res.isSuccess ? {
           pairAddress: contract,
-          liquidity: res.result?.result
+          liquidity: res.result
         } : null
       }
     }))
     return {
       isSuccess: resArray.every(httpRes => httpRes.isSuccess),
       result: resArray.map(httpRes => httpRes.result)
+    }
+  }
+  static async getTotalSupply(contractAddress: string): Promise<HttpResponse> {
+    const res = await Http.invokeView(contractAddress, "totalSupply", "", [])
+    return {
+      isSuccess: res.isSuccess,
+      result: res.isSuccess ? res.result.data.result : res.result.message
+    }
+  }
+  static async getReserves(pairAddress: string): Promise<HttpResponse> {
+    const res = await Http.invokeView(pairAddress, "getReserves", "", [])
+    const data = { reserve0: null, reserve1: null }
+    if (res.isSuccess) {
+      (res.result.data.result as string).replaceAll(/[{}\s]/g, "").split(",")
+        .map((el) => {
+          if (el.indexOf("reserve1") > -1) {
+            data.reserve0 = el.split("=")[1]
+          } else if (el.indexOf("reserve0") > -1) {
+            data.reserve1 = el.split("=")[1]
+          }
+        })
+    }
+    return {
+      isSuccess: res.isSuccess,
+      result: res.isSuccess ? data : res.result.message
     }
   }
   private static handleAxiosRes(axiosRes: AxiosResponse): NetworkResponse {

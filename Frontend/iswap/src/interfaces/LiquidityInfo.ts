@@ -1,7 +1,12 @@
 export class LiquidityInfo {
   name: string
   desc: string
-  pairContracts: string[]
   pairAddress: string
   liquidity: string
+  pairContracts: {
+    tokenA: string,
+    addressA: string,
+    tokenB: string,
+    addressB: string
+  }
 }

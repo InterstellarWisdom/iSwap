@@ -5,9 +5,9 @@
       <div class="slider-container">
         <a-space direction="vertical" :size="30" style="width: 100%;">
           <div class="remove-ratio text-center">
-            <span class="remove-ratio-title">Amount</span><span class="remove-ratio-value">{{`${value}%`}}</span>
+            <span class="remove-ratio-title">Amount</span><span class="remove-ratio-value">{{`${sliderValue}%`}}</span>
           </div>
-          <a-slider v-model:value="value" :tip-formatter="null"></a-slider>
+          <a-slider v-model:value="sliderValue" :tip-formatter="null"></a-slider>
           <div class="slider-buttons">
             <a-button @click="setSlider(25)">25%</a-button>
             <a-button @click="setSlider(50)">50%</a-button>
@@ -27,17 +27,21 @@
       <div class="pooled-info">
         <a-space direction="vertical" :size="20" style="width: 100%;">
           <div class="pooled-token">
-            <div class="pooled-token-amount">0.0840579</div>
-            <div class="pooled-token-name"><img><span>UNI</span></div>
+            <div class="pooled-token-amount">{{removedPooled0}}</div>
+            <div class="pooled-token-name"><img><span>{{token0}}</span></div>
           </div>
           <div class="pooled-token">
-            <div class="pooled-token-amount">0.0104873</div>
-            <div class="pooled-token-name"><img><span>ETH</span></div>
+            <div class="pooled-token-amount">{{removedPooled1}}</div>
+            <div class="pooled-token-name"><img><span>{{token1}}</span></div>
           </div>
         </a-space>
       </div>
       <div class="remove-liquidity-button">
-        <a-button size="large" block>确定移除</a-button>
+        <a-spin :spinning="isRemoving">
+          <PasswordFormModal @on-password-input="handlePasswordInput">
+            <a-button size="large" block>确定移除</a-button>
+          </PasswordFormModal>
+        </a-spin>
       </div>
     </a-space>
   </div>

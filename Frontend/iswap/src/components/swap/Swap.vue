@@ -1,6 +1,5 @@
 <template>
   <div class="swap-form text-center">
-    <div class="text-left head">Swap from</div>
     <AssetFromSelect></AssetFromSelect>
     <div class="swap-symbol">
       <span>

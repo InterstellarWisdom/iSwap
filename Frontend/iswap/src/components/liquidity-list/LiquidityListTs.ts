@@ -25,9 +25,7 @@ export const LiquidityListTs = defineComponent({
         this.liquidityList = (resArray.result as Array<{ liquidity: string, pairAddress: string }>)
           .filter(res => parseFloat(res.liquidity) > 0)
           .map((res) => {
-            const pair = pairs.find(pair => {
-              pair.pairAddress === res.pairAddress
-            })
+            const pair = pairs.find(pair => pair.pairAddress === res.pairAddress)
             pair.liquidity = res.liquidity
             return pair
           })

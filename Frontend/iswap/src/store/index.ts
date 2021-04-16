@@ -4,6 +4,7 @@ import { Token } from "@/interfaces/Token";
 import { Http } from "@/backend/Http";
 import { HttpResponse } from "@/interfaces/HttpResponse";
 import { Helper } from "@/helper/Helper";
+import { LiquidityInfo } from "@/interfaces/LiquidityInfo";
 export default createStore({
   state: {
     tokenList: [],
@@ -13,7 +14,9 @@ export default createStore({
       amountIn: 0,
       amountOutMin: 0
     },
-    address: ""
+    address: "",
+    currentLiquidityInfo: null,
+    nulsAmount: 0
   },
   getters: {
     availableTokenList: (state) => {
@@ -25,7 +28,9 @@ export default createStore({
       return state.tokenList.find(token => token.type === "original")
     },
     swapParams: (state) => state.swapParams,
-    address: (state) => state.address
+    address: (state) => state.address,
+    currentLiquidityInfo: (state) => state.currentLiquidityInfo,
+    nulsAmount: (state) => state.nulsAmount
   },
   mutations: {
     setTokenList: (state, tokens: Array<Token>) => {
@@ -45,6 +50,12 @@ export default createStore({
     },
     setAddress: (state, address: string) => {
       state.address = address
+    },
+    setCurrentLiquidityInfo: (state, liquidityInfo: LiquidityInfo) => {
+      state.currentLiquidityInfo = liquidityInfo
+    },
+    setNulsAmount: (state, amount) => {
+      state.nulsAmount = amount
     }
   },
   actions: {
@@ -137,7 +148,20 @@ export default createStore({
       }
       return Promise.resolve(res)
     },
-    removeLiquidity: ({ state }, payload) => {
+    /**
+     * payload[0] is liquidity
+     * payload[1] is tokenA
+     * payload[2] is amountA
+     * payload[3] is tokenB
+     * payload[4] is amountB,
+     * payload[5] is password
+     */
+    removeLiquidity: ({ getters }, payload) => {
+      const http = new Http(getters["address"], payload[5])
+      http.removeLiquidity(payload[0], payload[1], payload[2], payload[3], payload[4])
+    },
+
+    removeLiquidityNuls: ({ state }, payload) => {
       //
     },
     /**
@@ -161,10 +185,11 @@ export default createStore({
       }
       return Promise.resolve(res)
     },
-    getNulsBalance: async ({ getters }) => {
+    getNulsBalance: async ({ commit, getters }) => {
       const res = await Http.getNulsBalance(getters["address"])
       if (res.isSuccess) {
         res.result = Helper.handleAccuracy(res.result, 8)
+        commit("setNulsAmount", res.result)
       }
       return Promise.resolve(res)
     },

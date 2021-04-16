@@ -21,9 +21,9 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/add-liquidity/AddLiquidity.vue")
   },
   {
-    path: "/remove-liquidity",
+    path: "/remove-liquidity/:pairAddress",
     name: "removeLiquidity",
-    component: () => import("@/views/remove-liquidity/RemoveLiquidity.vue")
+    component: () => import("@/views/remove-liquidity/RemoveLiquidity.vue"),
   }
 ];
 
