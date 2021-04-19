@@ -11,9 +11,9 @@ export const LiquidityDetailTs = defineComponent({
   },
   setup(props) {
     const { totalLiquidity } = useGetTotalLiquidity(props.liquidityInfo.pairAddress)
-    const { reserves } = useGetReserves(props.liquidityInfo.pairAddress)
+    const { reserves,getReserves } = useGetReserves()
     return {
-      totalLiquidity, reserves,
+      totalLiquidity, reserves,getReserves
     }
   },
   computed: {
@@ -42,5 +42,8 @@ export const LiquidityDetailTs = defineComponent({
         }
       })
     }
+  },
+  mounted(){
+    this.getReserves(this.liquidityInfo.pairAddress)
   }
 })

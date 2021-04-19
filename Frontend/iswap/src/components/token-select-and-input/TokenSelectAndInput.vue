@@ -18,8 +18,7 @@
       </div>
     </div>
     <div class="token__input--amount"><input type="text" placeholder="0.00" :value="amountInput"
-        @input="handleInput" /><span>≈
-        10000000.00 RMB</span>
+        @input="handleInput" />
     </div>
   </div>
 </template>

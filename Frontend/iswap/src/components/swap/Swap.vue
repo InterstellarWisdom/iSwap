@@ -12,9 +12,7 @@
       </span>
     </div>
     <div class="swap__to">
-      <div class="text-left head">
-        Swap to
-      </div>
+
       <AssetToSelect></AssetToSelect>
     </div>
     <!--     <div class="swap__options">

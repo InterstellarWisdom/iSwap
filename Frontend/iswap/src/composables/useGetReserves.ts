@@ -1,16 +1,17 @@
 import { Http } from "@/backend/Http"
-import { onMounted, ref } from "vue"
+import { onMounted, reactive, ref } from "vue"
 
-export default function useGetReserves(pairAddress: string) {
-  const reserves = ref({})
-  const getReserves = async () => {
+export default function useGetReserves() {
+  const reserves = reactive({reserve0:null,reserve1:null})
+  const getReserves = async (pairAddress: string) => {
     const res = await Http.getReserves(pairAddress)
-    reserves.value = res.result
+    reserves.reserve0 = res.result.reserve0
+    reserves.reserve1=res.result.reserve1
     return res.result
   }
-  onMounted(getReserves)
+
   return {
     getReserves,
-    reserves
+    reserves,
   }
 }

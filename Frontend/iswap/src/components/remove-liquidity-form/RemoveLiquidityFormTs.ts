@@ -33,14 +33,15 @@ export const RemoveLiquidityFormTs = defineComponent({
     const liquidityInfo = computed(() => {
       return store.getters.currentLiquidityInfo
     })
-    const { reserves } = useGetReserves(liquidityInfo.value.pairAddress)
+    const { reserves, getReserves } = useGetReserves()
     const { totalLiquidity } = useGetTotalLiquidity(liquidityInfo.value.pairAddress)
     const { sliderValue, setSlider } = useSlider()
     return {
-      sliderValue, setSlider, liquidityInfo, reserves, totalLiquidity, isRemoving
+      sliderValue, setSlider, liquidityInfo, reserves, totalLiquidity, isRemoving, getReserves
     }
   },
   mounted() {
+    this.getReserves(this.liquidityInfo.pairAddress)
     if (!this.liquidityInfo) {
       this.$router.push({
         name: "pool"
